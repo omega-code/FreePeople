@@ -1,0 +1,19 @@
+﻿@model AuthenticateSpeakerCommand
+
+<form method="post">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Вход для спикеров
+		</div>
+		<div class="panel-body">
+			<p>Вам на почту придет ссылка, по ней вы попадёте на страницу своего мероприятия.</p>
+			<label asp-for="Email">Электронная почта</label>
+			<input asp-for="Email" type="email" />
+			<span asp-validation-for="Email"></span>
+		</div>
+		<div class="panel-footer">
+			<button>Войти</button> 
+		</div>
+	</div>
+</form>
+
