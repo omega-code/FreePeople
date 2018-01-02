@@ -3,7 +3,7 @@ using System;
 
 namespace FreePeople.Persistence.DTO
 {
-	internal class PlaceDTO
+	public class PlaceDTO
 	{
 		public PlaceDTO(Guid id, Guid cityId, string name, string address, string howToGet, string mapUrl, string contactName, string contactPhone)
 		{

@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using FreePeople.Domain;
 using FreePeople.Persistence.DTO;
+using Microsoft.EntityFrameworkCore;
 using Optional;
-using Optional.Linq;
 
 namespace FreePeople.Persistence.Repositories
 {
@@ -15,5 +14,7 @@ namespace FreePeople.Persistence.Repositories
 		}
 
 		public Option<Speaker> FindByEmail(string email) => Find(s => s.Email == email);
+
+		protected override IQueryable<SpeakerDTO> Include(IQueryable<SpeakerDTO> src) => src.Include(x => x.City);
 	}
 }

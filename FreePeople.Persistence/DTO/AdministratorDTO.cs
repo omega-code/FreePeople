@@ -2,7 +2,7 @@
 
 namespace FreePeople.Persistence.DTO
 {
-	internal class AdministratorDTO
+	public class AdministratorDTO
 	{
 		public AdministratorDTO(Guid id, Guid cityId, string name, string email)
 		{

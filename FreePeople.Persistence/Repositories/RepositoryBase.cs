@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
+using FreePeople.Domain.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Optional;
-using Optional.Utilities;
 
 namespace FreePeople.Persistence.Repositories
 {
@@ -16,7 +15,7 @@ namespace FreePeople.Persistence.Repositories
 		TDTO CreateDTO(TE e);
 	}
 
-	public abstract class RepositoryBase<TEntity, TKey, TDTO, TFactory>
+	public abstract class RepositoryBase<TEntity, TKey, TDTO, TFactory> : IEntityRepository<TEntity, TKey>
 		where TEntity : class
 		where TDTO : class
 		where TFactory : class, IFactory<TEntity, TDTO>

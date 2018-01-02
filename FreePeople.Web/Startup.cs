@@ -1,4 +1,5 @@
 ﻿using FreePeople.Domain;
+using FreePeople.Domain.Infrastructure;
 using FreePeople.Infrastructure;
 using FreePeople.Persistence;
 using FreePeople.Persistence.Repositories;
@@ -31,10 +32,25 @@ namespace FreePeople.Web
 
 			services.AddSingleton(sp => Configuration.GetSection("Smtp").Get<SmtpConfig>());
 			services.AddSingleton<IEmailService, EmailService>();
-			services.AddTransient(sp => new SpeakerService(sp.GetService<ISpeakerRepository>(), sp.GetService<IEmailService>(), "http://freepeople.world/is"));
-			services.AddTransient<ISpeakerRepository, SpeakerRepository>(sp => new SpeakerRepository(sp.GetService<SpeakerFactory>(), connectionString));
+
+			services.AddTransient<AdministratorFactory>();
+			services.AddTransient<IAdministratorRepository, AdministratorRepository>(sp => new AdministratorRepository(sp.GetService<AdministratorFactory>(), connectionString));
+			services.AddTransient(sp => new AdministratorService(sp.GetService<IAdministratorRepository>(), sp.GetService<IEmailService>(), "http://localhost:5133"));
+
+
 			services.AddTransient<SpeakerFactory>();
+			services.AddTransient<ISpeakerRepository, SpeakerRepository>(sp => new SpeakerRepository(sp.GetService<SpeakerFactory>(), connectionString));
+			services.AddTransient(sp => new SpeakerService(sp.GetService<ISpeakerRepository>(), sp.GetService<ITalkRepository>(), sp.GetService<IEmailService>(), "http://localhost:5133"));
+
 			services.AddTransient<CityFactory>();
+			services.AddTransient<ICityRepository, CityRepository>(sp => new CityRepository(sp.GetService<CityFactory>(), connectionString));
+			services.AddTransient<CityService>();
+
+			services.AddTransient<PlaceFactory>();
+
+			services.AddTransient<TalkFactory>();
+			services.AddTransient<ITalkRepository, TalkRepository>(sp => new TalkRepository(sp.GetService<TalkFactory>(), connectionString));
+			services.AddTransient<TalkService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

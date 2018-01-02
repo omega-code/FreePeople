@@ -1,0 +1,98 @@
+﻿@model MakeDraftView
+
+<form method="post">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Информация о Вас
+		</div>
+		<div class="panel-body">
+			<div class="form-group has-feedback">
+				<label asp-for="Command.SpeakerEmail" class="control-label">Электронная почта</label>
+				<input asp-for="Command.SpeakerEmail" type="email" class="form-control" />
+				<span asp-validation-for="Command.SpeakerEmail" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.CityId" class="control-label">Город</label>
+				<select asp-for="Command.CityId" class="form-control">
+					<option value="">выберите город</option>
+					@foreach (var city in Model.Cities)
+					{
+						<option value="@city.Id">@city.Name</option>
+					}
+				</select>
+				<span asp-validation-for="Command.CityId" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.SpeakerName" class="control-label">Ваше имя</label>
+				<input asp-for="Command.SpeakerName" type="text" class="form-control" />
+				<span asp-validation-for="Command.SpeakerName" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.SpeakerAbout" class="control-label">О вас</label>
+				<input asp-for="Command.SpeakerAbout" type="text" class="form-control" />
+				<span asp-validation-for="Command.SpeakerAbout" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.SpeakerPhone" class="control-label">Телефон</label>
+				<input asp-for="Command.SpeakerPhone" type="tel" class="form-control" />
+				<span asp-validation-for="Command.SpeakerPhone" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.SpeakerFacebook" class="control-label">Ссылка на профиль на Facebook</label>
+				<input asp-for="Command.SpeakerFacebook" type="url" class="form-control" />
+				<span asp-validation-for="Command.SpeakerFacebook" class="help-block"></span>
+			</div>
+			@if (Model.Command.SpeakerPhoto != null)
+			{
+				<div class="form-group has-feedback">
+					<img src="~/images/ts-meetup.png" alt="пример фото" />
+				</div>
+			}
+			<div class="form-group has-feedback">
+				<label asp-for="Command.SpeakerPhoto" class="control-label">Ваше фото для афиши</label>
+				<input asp-for="Command.SpeakerPhoto" type="file" class="form-control" />
+				@*<span asp-validation-for="Command.SpeakerPhoto" class="help-block"></span>*@
+			</div>
+		</div>
+	</div>
+
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Информация о выступлении
+		</div>
+		<div class="panel-body">
+			<div class="form-group has-feedback">
+				<label asp-for="Command.TalkStartsAt" class="control-label">Дата выступления</label>
+				<input asp-for="Command.TalkStartsAt" type="date" class="form-control" />
+				<span asp-validation-for="Command.TalkStartsAt" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.TalkName" class="control-label">Название</label>
+				<input asp-for="Command.TalkName" type="text" class="form-control" />
+				<span asp-validation-for="Command.TalkName" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.TalkComment" class="control-label">Подназвание</label>
+				<input asp-for="Command.TalkComment" type="text" class="form-control" />
+				<span asp-validation-for="Command.TalkComment" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.TalkShortInfo" class="control-label">Краткий анонс</label>
+				<textarea asp-for="Command.TalkShortInfo" class="form-control">
+				</textarea>
+				<span asp-validation-for="Command.TalkShortInfo" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="Command.TalkFullInfo" class="control-label">Полный анонс</label>
+				<textarea asp-for="Command.TalkFullInfo" class="form-control">
+				</textarea>
+				<span asp-validation-for="Command.TalkFullInfo" class="help-block"></span>
+			</div>
+		</div>
+	</div>
+
+	<div class="panel-footer">
+		<button>Подать заявку на выступление</button>
+	</div>
+
+</form>

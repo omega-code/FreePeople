@@ -20,7 +20,7 @@ namespace FreePeople.Domain.Tests
         public void WhenCreated_StatusIsNew()
         {
 			var talk = new Talk(Guid.NewGuid(), DefaultCity, DateTime.Today.AddDays(1), DefaultSpeaker, "Test", "comment", "", "");
-			Assert.AreEqual(TalkStatus.New, talk.Status);
+			Assert.AreEqual(TalkStatus.Draft, talk.Status);
         }
 
 		[TestMethod]

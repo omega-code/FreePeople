@@ -2,21 +2,21 @@
 
 namespace FreePeople.Persistence.DTO
 {
-	internal class TalkDTO
+	public class TalkDTO
 	{
 		public TalkDTO(Guid id,
 			string name, string comment, string shortInfo, string fullInfo,
 			DateTime startsAt,
-			SpeakerDTO speaker, CityDTO city, string report,
+			Guid speakerId, Guid cityId, string report,
 			DateTime? approvedAt,
-			AdministratorDTO approvedBy,
-			PlaceDTO place,
+			Guid? approvedById,
+			Guid? placeId,
 			DateTime? placeVerifiedAt,
-			AdministratorDTO placeVerifiedBy,
+			Guid? placeVerifiedById,
 			DateTime? publishedAt,
-			AdministratorDTO publishedBy,
+			Guid? publishedById,
 			DateTime? reportedAt,
-			AdministratorDTO reportedBy)
+			Guid? reportedById)
 		{
 			Id = id;
 			Name = name;
@@ -24,18 +24,18 @@ namespace FreePeople.Persistence.DTO
 			ShortInfo = shortInfo;
 			FullInfo = fullInfo;
 			StartsAt = startsAt;
-			Speaker = speaker;
-			City = city;
+			SpeakerId = speakerId;
+			CityId = cityId;
 			Report = report;
 			ApprovedAt = approvedAt;
-			ApprovedBy = approvedBy;
-			Place = place;
+			ApprovedById = approvedById;
+			PlaceId = placeId;
 			PlaceVerifiedAt = placeVerifiedAt;
-			PlaceVerifiedBy = placeVerifiedBy;
+			PlaceVerifiedById = placeVerifiedById;
 			PublishedAt = publishedAt;
-			PublishedBy = publishedBy;
+			PublishedById = publishedById;
 			ReportedAt = reportedAt;
-			ReportedBy = reportedBy;
+			ReportedById = reportedById;
 		}
 
 		public TalkDTO() { }

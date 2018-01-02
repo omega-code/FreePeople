@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 using FreePeople.Domain;
+using FreePeople.Domain.Infrastructure;
 
 namespace FreePeople.Infrastructure
 {

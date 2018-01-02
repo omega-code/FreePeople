@@ -4,7 +4,8 @@ namespace FreePeople.Web.Models
 {
 	public class AuthenticateSpeakerCommand
 	{
-		[Required] [EmailAddress]
+		[Required]
+		[EmailAddress]
 		public string Email { get; set; }
 	}
 }

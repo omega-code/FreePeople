@@ -5,7 +5,7 @@ namespace FreePeople.Domain
 {
 	public enum TalkStatus
 	{
-		New,
+		Draft,
 		Approved,
 		Placed,
 		Published,
@@ -16,11 +16,11 @@ namespace FreePeople.Domain
 	{
 		public Talk(Guid id, City city, DateTime startsAt, Speaker speaker, string name, string comment, string shortInfo, string fullInfo)
 			: this(id,
-				  name, comment, shortInfo, fullInfo, startsAt, speaker, city, Option.None<string>(),
+				  name, comment, shortInfo, fullInfo, startsAt, speaker, city,
 				  Option.None<DateTime>(), Option.None<Administrator>(),
 				  Option.None<Place>(), Option.None<DateTime>(), Option.None<Administrator>(),
-				  Option.None<DateTime>(), Option.None<Administrator>(),
-				  Option.None<DateTime>(), Option.None<Administrator>()
+				  Option.None<DateTime>(), Option.None<Administrator>(), 
+				  Option.None<string>(), Option.None<DateTime>(), Option.None<Administrator>()
 			)
 		{
 		}
@@ -28,7 +28,7 @@ namespace FreePeople.Domain
 		internal Talk(Guid id,
 			string name, string comment, string shortInfo, string fullInfo,
 			DateTime startsAt,
-			Speaker speaker, City city, Option<string> report,
+			Speaker speaker, City city, 
 			Option<DateTime> approvedAt,
 			Option<Administrator> approvedBy,
 			Option<Place> place,
@@ -36,6 +36,7 @@ namespace FreePeople.Domain
 			Option<Administrator> placeVerifiedBy,
 			Option<DateTime> publishedAt,
 			Option<Administrator> publishedBy,
+			Option<string> report,
 			Option<DateTime> reportedAt,
 			Option<Administrator> reportedBy) : base(id)
 		{
@@ -44,17 +45,28 @@ namespace FreePeople.Domain
 			ShortInfo = shortInfo;
 			FullInfo = fullInfo;
 			StartsAt = startsAt;
+			Speaker = speaker;
+			City = city;
+			ApprovedAt = approvedAt;
+			ApprovedBy = approvedBy;
 			Place = place;
 			PlaceVerifiedAt = placeVerifiedAt;
 			PlaceVerifiedBy = placeVerifiedBy;
-			Speaker = speaker;
-			Report = report;
-			ApprovedAt = approvedAt;
-			ApprovedBy = approvedBy;
 			PublishedAt = publishedAt;
 			PublishedBy = publishedBy;
+			Report = report;
 			ReportedAt = reportedAt;
 			ReportedBy = reportedBy;
+		}
+
+		public void EditDraft(DateTime startsAt, City city, string name, string comment, string shortInfo, string fullInfo)
+		{
+			StartsAt = startsAt;
+			City = city;
+			Name = name;
+			Comment = comment;
+			ShortInfo = shortInfo;
+			FullInfo = fullInfo;
 		}
 
 		public string Name { get; private set; }
@@ -69,11 +81,11 @@ namespace FreePeople.Domain
 						: TalkStatus.Published
 					: TalkStatus.Placed
 				: TalkStatus.Approved
-			: TalkStatus.New;
+			: TalkStatus.Draft;
 
 		public DateTime StartsAt { get; private set; }
 		public Speaker Speaker { get; }
-		public City City { get; }
+		public City City { get; private set; }
 		public Option<Place> Place { get; private set; }
 		public Option<DateTime> PlaceVerifiedAt { get; private set; }
 		public Option<Administrator> PlaceVerifiedBy { get; private set; }

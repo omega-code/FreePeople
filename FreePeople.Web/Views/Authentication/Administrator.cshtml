@@ -1,0 +1,25 @@
+﻿@model AuthenticateAdministratorCommand
+
+<form method="post">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Вход для администраторов
+		</div>
+		<div class="panel-body">
+			<div class="form-group has-feedback">
+				<label asp-for="Email" class="control-label">Электронная почта</label>
+				<input asp-for="Email" type="email" class="form-control" />
+				<span asp-validation-for="Email" class="help-block"></span>
+			</div>
+			<div class="form-group has-feedback">
+				<label asp-for="PIN" class="control-label">ПИН</label>
+				<input asp-for="PIN" type="password" class="form-control" />
+				<span asp-validation-for="PIN" class="help-block"></span>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<button>Войти</button> 
+		</div>
+	</div>
+</form>
+

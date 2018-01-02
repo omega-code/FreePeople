@@ -11,10 +11,12 @@ namespace FreePeople.Web.Controllers
     public class AuthenticationController : Controller
     {
 		private readonly SpeakerService _speakerService;
+		private readonly AdministratorService _administratorService;
 
-		public AuthenticationController(SpeakerService speakerService)
+		public AuthenticationController(SpeakerService speakerService, AdministratorService administratorService)
 		{
 			_speakerService = speakerService;
+			_administratorService = administratorService;
 		}
 
 		public IActionResult Speaker() => View(new AuthenticateSpeakerCommand());
@@ -36,9 +38,11 @@ namespace FreePeople.Web.Controllers
 		public IActionResult Administrator(AuthenticateAdministratorCommand model)
 		{
 			if (!ModelState.IsValid)
-				return View();
+				return View(model);
 
-			return View();
+			var user = _administratorService.CheckUser(model.Email, model.PIN);
+			
+			return RedirectToAction("Events", "Administrator");
 		}
 	}
 }

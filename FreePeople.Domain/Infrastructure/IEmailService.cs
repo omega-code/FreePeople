@@ -1,4 +1,4 @@
-﻿namespace FreePeople.Domain
+﻿namespace FreePeople.Domain.Infrastructure
 {
 	public interface IEmailService
 	{
