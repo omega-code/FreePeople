@@ -1,0 +1,16 @@
+﻿@model TalkCalendarView
+
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Выступления
+		<p><small>@Model.Month.ToString("MMMM yyyy"), <strong>@Model.City.Name</strong></small></p>
+	</div>
+	<div class="panel-body">
+		<ul>
+			@foreach (var talk in Model.Talks)
+			{
+				<li> <strong>@talk.StartsAt.ToString("dd MMMM")</strong> @talk.Name (статус: <a href="/talk/manage/?id=@talk.Id">@talk.Status</a>)</li>
+			}
+		</ul>
+	</div>
+</div>

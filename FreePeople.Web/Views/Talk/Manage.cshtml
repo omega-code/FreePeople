@@ -1,9 +1,11 @@
-﻿@model MakeDraftView
+﻿@model ManageTalkView
+
+<h3><strong>@Model.Talk.StartsAt.ToString("dd MMMM")</strong> <br /><small>@Model.Talk.Name</small></h3>
 
 <form method="post">
 	<div class="panel panel-primary">
 		<div class="panel-heading">
-			Информация о Вас
+			Информация о спикере и выступлении
 		</div>
 		<div class="panel-body">
 			<div class="form-group has-feedback">
@@ -12,23 +14,12 @@
 				<span asp-validation-for="Command.SpeakerEmail" class="help-block"></span>
 			</div>
 			<div class="form-group has-feedback">
-				<label asp-for="Command.CityId" class="control-label">Город</label>
-				<select asp-for="Command.CityId" class="form-control">
-					<option value="">выберите город</option>
-					@foreach (var city in Model.Cities)
-					{
-						<option value="@city.Id">@city.Name</option>
-					}
-				</select>
-				<span asp-validation-for="Command.CityId" class="help-block"></span>
-			</div>
-			<div class="form-group has-feedback">
-				<label asp-for="Command.SpeakerName" class="control-label">Ваше имя</label>
+				<label asp-for="Command.SpeakerName" class="control-label">ФИО</label>
 				<input asp-for="Command.SpeakerName" type="text" class="form-control" />
 				<span asp-validation-for="Command.SpeakerName" class="help-block"></span>
 			</div>
 			<div class="form-group has-feedback">
-				<label asp-for="Command.SpeakerAbout" class="control-label">О вас</label>
+				<label asp-for="Command.SpeakerAbout" class="control-label">Комментарий</label>
 				<input asp-for="Command.SpeakerAbout" type="text" class="form-control" />
 				<span asp-validation-for="Command.SpeakerAbout" class="help-block"></span>
 			</div>
@@ -49,27 +40,15 @@
 				</div>
 			}
 			<div class="form-group has-feedback">
-				<label asp-for="Command.SpeakerPhoto" class="control-label">Ваше фото для афиши</label>
+				<label asp-for="Command.SpeakerPhoto" class="control-label">Фото для афиши</label>
 				<input asp-for="Command.SpeakerPhoto" type="file" class="form-control" />
 				@*<span asp-validation-for="Command.SpeakerPhoto" class="help-block"></span>*@
 			</div>
 		</div>
-	</div>
-
-	<div class="panel panel-primary">
-		<div class="panel-heading">
-			Информация о выступлении
-		</div>
 		<div class="panel-body">
 			<div class="form-group has-feedback">
 				<label asp-for="Command.TalkStartsAt" class="control-label">Дата выступления</label>
-				<select asp-for="Command.TalkStartsAt" class="form-control">
-					<option value="">выберите один из ближайших понедельников</option>
-					@foreach (var monday in Model.Mondays)
-					{
-						<option value="@monday.ToString("yyyy-MM-dd")">@monday.ToString("dd MMMM")</option>
-					}
-				</select>
+				<input asp-for="Command.TalkStartsAt" type="date" class="form-control" />
 				<span asp-validation-for="Command.TalkStartsAt" class="help-block"></span>
 			</div>
 			<div class="form-group has-feedback">
@@ -94,12 +73,83 @@
 				</textarea>
 				<span asp-validation-for="Command.TalkFullInfo" class="help-block"></span>
 			</div>
-
-			<hr />
-			Превью вашей афиши ...
 		</div>
 		<div class="panel-footer">
-			<button>Подать заявку на выступление</button>
+			<button class="btn btn-primary">Обновить информацию</button>
+		</div>
+	</div>
+</form>
+
+
+
+<form method="post" asp-action="VerifyPlace">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Подтвердить место проведения
+		</div>
+		<div class="panel-body">
+			<input type="hidden" name="TalkId" value="@Model.TalkId" />
+			<div class="form-group has-feedback">
+				<label for="PlaceId" class="control-label">Площадка</label>
+				<select id="PlaceId" name="PlaceId" class="form-control">
+					<option value="">выберите площадку</option>
+					@foreach (var place in Model.Places)
+					{
+						<option value="@place.Id">@place.Name (@place.Address)</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-info">Утвердить место</button>
+		</div>
+	</div>
+</form>
+
+<form method="post" asp-action="Approve">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Утвердить мероприятие
+		</div>
+		<div class="panel-body">
+			<input type="hidden" name="TalkId" value="@Model.TalkId" />
+			<div class="well">После утверждения спикер потеряет возможность вносить изменения в информацию о мероприятии.</div>
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-info">Утвердить</button>
+		</div>
+	</div>
+</form>
+
+
+<form method="post" asp-action="Publish">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Опубликовать мероприятие
+		</div>
+		<div class="panel-body">
+			<input type="hidden" name="TalkId" value="@Model.TalkId" />
+			<div class="well">Информация о мероприятии будет размещена в Timepad, и по согласованному расписанию будут сделаны посты на Facebook.</div>
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-success">Опубликовать</button>
+		</div>
+	</div>
+</form>
+
+
+<form method="post" asp-action="Report">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			Опубликовать отчёт
+		</div>
+		<div class="panel-body">
+			<input type="hidden" name="TalkId" value="@Model.TalkId" />
+			<textarea name="Report">
+			</textarea>
+		</div>
+		<div class="panel-footer">
+			<button class="btn btn-info">Опубликовать</button>
 		</div>
 	</div>
 </form>

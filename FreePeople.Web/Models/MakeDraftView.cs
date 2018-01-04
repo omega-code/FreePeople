@@ -8,7 +8,7 @@ namespace FreePeople.Web.Models
 {
 	public class MakeDraftView
 	{
-		public MakeDraftView(Guid speakerId, string speakerEmail, Option<Talk> talk, Option<Speaker> speaker, IReadOnlyCollection<City> cities) : this(
+		public MakeDraftView(Guid speakerId, string speakerEmail, Option<Talk> talk, Option<Speaker> speaker, IReadOnlyCollection<City> cities, IReadOnlyCollection<DateTime> mondays) : this(
 			speakerId,
 			speaker
 				.Map(s => new CreateTalkCommand
@@ -27,20 +27,20 @@ namespace FreePeople.Web.Models
 					TalkFullInfo = talk.Map(t => t.FullInfo).ValueOr((string)null)
 				})
 				.ValueOr(new CreateTalkCommand { SpeakerEmail = speakerEmail, TalkName = TalkNamePattern(Option.None<string>()) }),
-			cities
+			cities, mondays
 		) { }
 
-		public MakeDraftView(Guid speakerId, CreateTalkCommand cmd, IReadOnlyCollection<City> cities)
+		public MakeDraftView(Guid speakerId, CreateTalkCommand cmd, IReadOnlyCollection<City> cities, IReadOnlyCollection<DateTime> mondays)
 		{
 			Cities = cities.Select(CityView.FromDomain).ToArray();
 			SpeakerId = speakerId;
 			SpeakerEmail = cmd.SpeakerEmail;
 			Command = cmd;
+			Mondays = mondays;
 		}
 
-		public MakeDraftView() { }
-
-		public CreateTalkCommand Command { get; set; }
+		public CreateTalkCommand Command { get; }
+		public IReadOnlyCollection<DateTime> Mondays { get; }
 
 		private static string TalkNamePattern(Option<string> speakerName) => $"Public Talk с {speakerName.ValueOr("...")}";
 

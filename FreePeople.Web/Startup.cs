@@ -3,6 +3,7 @@ using FreePeople.Domain.Infrastructure;
 using FreePeople.Infrastructure;
 using FreePeople.Persistence;
 using FreePeople.Persistence.Repositories;
+using FreePeople.Web.Controllers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,8 @@ namespace FreePeople.Web
 			services.AddSingleton(sp => Configuration.GetSection("Smtp").Get<SmtpConfig>());
 			services.AddSingleton<IEmailService, EmailService>();
 
+			services.AddTransient<AuthenticationProvider>();
+
 			services.AddTransient<AdministratorFactory>();
 			services.AddTransient<IAdministratorRepository, AdministratorRepository>(sp => new AdministratorRepository(sp.GetService<AdministratorFactory>(), connectionString));
 			services.AddTransient(sp => new AdministratorService(sp.GetService<IAdministratorRepository>(), sp.GetService<IEmailService>(), "http://localhost:5133"));
@@ -47,6 +50,8 @@ namespace FreePeople.Web
 			services.AddTransient<CityService>();
 
 			services.AddTransient<PlaceFactory>();
+			services.AddTransient<IPlaceRepository, PlaceRepository>(sp => new PlaceRepository(sp.GetService<PlaceFactory>(), connectionString));
+			services.AddTransient<PlaceService>();
 
 			services.AddTransient<TalkFactory>();
 			services.AddTransient<ITalkRepository, TalkRepository>(sp => new TalkRepository(sp.GetService<TalkFactory>(), connectionString));

@@ -41,8 +41,10 @@ namespace FreePeople.Web.Controllers
 				return View(model);
 
 			var user = _administratorService.CheckUser(model.Email, model.PIN);
+		
+			//TODO:  Auth
 			
-			return RedirectToAction("Events", "Administrator");
+			return RedirectToAction("Calendar", "Talk");
 		}
 	}
 }
